@@ -1210,17 +1210,72 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .container { padding: 0 1rem; }
 }
 
-/* ── Cursor glow ──────────────────────────────────────────── */
+/* ── Custom Devil Staff Cursor ────────────────────────────── */
+
+/* Hide the default cursor everywhere */
+*, *::before, *::after { cursor: none !important; }
+
+/* The main cursor — devil trident SVG */
+.cursor-main {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-4px, -4px);
+  will-change: transform;
+  transition: transform 0.08s linear;
+  filter: drop-shadow(0 0 6px rgba(192,57,43,0.9))
+          drop-shadow(0 0 14px rgba(192,57,43,0.5));
+}
+.cursor-main svg {
+  width: 100%; height: 100%;
+}
+
+/* Cursor grows on hover over clickable elements */
+.cursor-main.cursor-hover {
+  transform: translate(-4px, -4px) scale(1.35);
+  filter: drop-shadow(0 0 10px rgba(192,57,43,1))
+          drop-shadow(0 0 24px rgba(192,57,43,0.7));
+}
+
+/* The trailing glow orb */
 .cursor-glow {
   position: fixed;
-  width: 300px; height: 300px;
+  width: 280px; height: 280px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(192,57,43,0.06) 0%, transparent 70%);
+  background: radial-gradient(circle,
+    rgba(192,57,43,0.07) 0%,
+    rgba(192,57,43,0.03) 40%,
+    transparent 70%
+  );
   pointer-events: none;
-  z-index: 9999;
+  z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: opacity 0.3s;
   will-change: left, top;
+  transition: opacity 0.3s;
+}
+
+/* Cursor dot trail particles */
+.cursor-spark {
+  position: fixed;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--red);
+  pointer-events: none;
+  z-index: 9997;
+  transform: translate(-50%, -50%);
+  animation: sparkFade 0.6s ease-out forwards;
+}
+@keyframes sparkFade {
+  0%   { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%,-50%) scale(0); }
+}
+
+/* On mobile — restore default cursor */
+@media (hover: none) {
+  *, *::before, *::after { cursor: auto !important; }
+  .cursor-main, .cursor-glow { display: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1565,3 +1620,35 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .vids-grid { grid-template-columns: 1fr; }
   .vid-card__media { aspect-ratio: 16/9; }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   PERFORMANCE OPTIMISATIONS
+   ═══════════════════════════════════════════════════════════ */
+
+/* Defer rendering of off-screen sections until near viewport */
+.music,
+.gallery,
+.impact,
+.press,
+.videos {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
+}
+
+/* GPU-composite only the elements that actually animate */
+.vid-bg video,
+.music-card,
+.gallery__item img,
+.vid-card__video,
+.ticker__track {
+  will-change: transform;
+}
+
+/* Remove will-change from static elements */
+.cursor-glow { will-change: left, top; }
+
+/* Smooth font rendering */
+body { text-rendering: optimizeSpeed; }
+
+/* Reduce paint on scroll for fixed nav */
+.nav { will-change: background; }
