@@ -5,93 +5,123 @@
 (function () {
   "use strict";
 
-  /* ── Dark Dot Cursor (heisrema.com style) ────────────────── */
+  /* ── Devil Staff Cursor — Dark & Realistic ───────────────── */
   const isTouch = window.matchMedia("(hover: none)").matches;
 
   if (!isTouch) {
-    // Create elements
-    const dot  = document.createElement("div");
-    const ring = document.createElement("div");
+    // ── Build the trident SVG ──────────────────────────────────
+    const cursor = document.createElement("div");
+    cursor.className = "cursor-main";
+    cursor.innerHTML = `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="shaftGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#3a0a0a"/>
+          <stop offset="40%"  stop-color="#8b1a1a"/>
+          <stop offset="100%" stop-color="#2a0505"/>
+        </linearGradient>
+        <linearGradient id="prongGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#cc2200"/>
+          <stop offset="60%"  stop-color="#7a1010"/>
+          <stop offset="100%" stop-color="#1a0505"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="1.2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Staff shaft with taper -->
+      <path d="M21 15 L20 42 L22 42 L23 15 Z" fill="url(#shaftGrad)"/>
+      <!-- Shaft highlight -->
+      <line x1="21.5" y1="15" x2="21" y2="41" stroke="rgba(200,80,60,0.35)" stroke-width="0.6"/>
+      <!-- Center prong — tallest -->
+      <path d="M21.5 3 L21.5 17" stroke="url(#prongGrad)" stroke-width="2.8" stroke-linecap="round" filter="url(#glow)"/>
+      <!-- Left prong -->
+      <path d="M21.5 7 C17 5 14 8 14 13 C14 16 16.5 17 18.5 16.5"
+            stroke="url(#prongGrad)" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <!-- Right prong -->
+      <path d="M21.5 7 C26 5 28 8 28 13 C28 16 25.5 17 23.5 16.5"
+            stroke="url(#prongGrad)" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <!-- Left tip barb -->
+      <path d="M14 10 L12 5 L16 9" stroke="#991111" stroke-width="1.4"
+            stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- Right tip barb -->
+      <path d="M28 10 L30 5 L26 9" stroke="#991111" stroke-width="1.4"
+            stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <!-- Center tip sharp point -->
+      <path d="M21.5 1 L20.5 5 L21.5 4 L22.5 5 Z" fill="#dd2200"/>
+      <!-- Crossguard -->
+      <rect x="16" y="14.5" width="11" height="2" rx="1" fill="#5a1010"/>
+      <rect x="17" y="14.8" width="9" height="1.2" rx="0.6" fill="#8b2020"/>
+      <!-- Base pommel -->
+      <ellipse cx="21.5" cy="41.5" rx="2.2" ry="1.4" fill="#3a0808"/>
+      <ellipse cx="21.5" cy="41.2" rx="1.4" ry="0.8" fill="#7a1515"/>
+      <!-- Ember glow at base -->
+      <circle cx="21.5" cy="41.5" r="2.8" fill="rgba(180,20,5,0.18)"/>
+    </svg>`;
+    document.body.appendChild(cursor);
+
+    // Glow orb
     const glow = document.createElement("div");
-    dot.className  = "cursor-dot";
-    ring.className = "cursor-ring";
     glow.className = "cursor-glow";
-    document.body.append(dot, ring, glow);
+    document.body.appendChild(glow);
 
     let mouseX = 0, mouseY = 0;
-    let ringX  = 0, ringY  = 0;
     let glowX  = 0, glowY  = 0;
+    let lastSmokeX = 0, lastSmokeY = 0;
 
-    // Dot snaps instantly via JS (no CSS transition on position)
     document.addEventListener("mousemove", (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      dot.style.left = mouseX + "px";
-      dot.style.top  = mouseY + "px";
+
+      // Snap cursor instantly
+      cursor.style.left = mouseX + "px";
+      cursor.style.top  = mouseY + "px";
+
+      // Smoke trail every 14px
+      const dx = mouseX - lastSmokeX;
+      const dy = mouseY - lastSmokeY;
+      if (Math.sqrt(dx * dx + dy * dy) > 14) {
+        const s = document.createElement("div");
+        s.className = "cursor-smoke";
+        const sz = Math.random() * 7 + 5;
+        const dark = Math.random() > 0.5;
+        s.style.cssText = `
+          left:${mouseX}px; top:${mouseY}px;
+          width:${sz}px; height:${sz}px;
+          background:${dark
+            ? "radial-gradient(circle, rgba(60,5,5,0.55) 0%, transparent 70%)"
+            : "radial-gradient(circle, rgba(140,20,10,0.35) 0%, transparent 70%)"};
+        `;
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 900);
+        lastSmokeX = mouseX;
+        lastSmokeY = mouseY;
+      }
     });
 
-    // Ring + glow lag behind with lerp
-    (function animateCursor() {
-      // Ring — medium lag
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      ring.style.left = ringX + "px";
-      ring.style.top  = ringY + "px";
-
-      // Glow — slow lag
-      glowX += (mouseX - glowX) * 0.05;
-      glowY += (mouseY - glowY) * 0.05;
+    // Glow lags behind
+    (function animateGlow() {
+      glowX += (mouseX - glowX) * 0.06;
+      glowY += (mouseY - glowY) * 0.06;
       glow.style.left = glowX + "px";
       glow.style.top  = glowY + "px";
-
-      requestAnimationFrame(animateCursor);
+      requestAnimationFrame(animateGlow);
     })();
 
-    // Hover state — expand ring, colour dot red
-    const clickables = "a, button, .music-card, .vid-card, .gallery__item, .impact-stat, .nav__logo, select, label";
+    // Hover state
+    const clickables = "a, button, .music-card, .vid-card, .gallery__item, .impact-stat, .nav__logo, select";
     document.querySelectorAll(clickables).forEach(el => {
-      el.addEventListener("mouseenter", () => {
-        dot.classList.add("is-hovering");
-        ring.classList.add("is-hovering");
-      });
-      el.addEventListener("mouseleave", () => {
-        dot.classList.remove("is-hovering");
-        ring.classList.remove("is-hovering");
-      });
+      el.addEventListener("mouseenter", () => cursor.classList.add("is-hovering"));
+      el.addEventListener("mouseleave", () => cursor.classList.remove("is-hovering"));
     });
 
-    // Text input state — cursor becomes a caret
-    const textEls = "input, textarea, [contenteditable]";
-    document.querySelectorAll(textEls).forEach(el => {
-      el.addEventListener("mouseenter", () => {
-        dot.classList.add("is-text");
-        ring.classList.add("is-text");
-      });
-      el.addEventListener("mouseleave", () => {
-        dot.classList.remove("is-text");
-        ring.classList.remove("is-text");
-      });
-    });
+    // Click state
+    document.addEventListener("mousedown", () => cursor.classList.add("is-clicking"));
+    document.addEventListener("mouseup",   () => cursor.classList.remove("is-clicking"));
 
-    // Click state — compress both
-    document.addEventListener("mousedown", () => {
-      dot.classList.add("is-clicking");
-      ring.classList.add("is-clicking");
-    });
-    document.addEventListener("mouseup", () => {
-      dot.classList.remove("is-clicking");
-      ring.classList.remove("is-clicking");
-    });
-
-    // Hide when leaving window
-    document.addEventListener("mouseleave", () => {
-      dot.style.opacity  = "0";
-      ring.style.opacity = "0";
-    });
-    document.addEventListener("mouseenter", () => {
-      dot.style.opacity  = "1";
-      ring.style.opacity = "1";
-    });
+    // Hide on leave
+    document.addEventListener("mouseleave", () => { cursor.style.opacity = "0"; glow.style.opacity = "0"; });
+    document.addEventListener("mouseenter", () => { cursor.style.opacity = "1"; glow.style.opacity = "1"; });
   }
 
   /* ── Nav scroll state (throttled) ────────────────────────── */
