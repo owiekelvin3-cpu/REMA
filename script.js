@@ -5,87 +5,93 @@
 (function () {
   "use strict";
 
-  /* ── Devil Staff Custom Cursor ────────────────────────────── */
-  const isTouchDevice = window.matchMedia("(hover: none)").matches;
+  /* ── Dark Dot Cursor (heisrema.com style) ────────────────── */
+  const isTouch = window.matchMedia("(hover: none)").matches;
 
-  if (!isTouchDevice) {
-    // Create the trident/devil staff cursor element
-    const cursor = document.createElement("div");
-    cursor.className = "cursor-main";
-    cursor.innerHTML = `
-      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Staff shaft -->
-        <line x1="18" y1="10" x2="18" y2="34" stroke="#c0392b" stroke-width="2.2" stroke-linecap="round"/>
-        <!-- Center prong -->
-        <path d="M18 2 L18 14" stroke="#e74c3c" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Left prong -->
-        <path d="M18 6 Q12 4 11 10 Q11 14 14 14" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" fill="none"/>
-        <!-- Right prong -->
-        <path d="M18 6 Q24 4 25 10 Q25 14 22 14" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" fill="none"/>
-        <!-- Left outer prong tip -->
-        <path d="M11 8 L10 4 L13 7" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <!-- Right outer prong tip -->
-        <path d="M25 8 L26 4 L23 7" stroke="#c0392b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <!-- Base orb glow -->
-        <circle cx="18" cy="34" r="2.5" fill="#c0392b" opacity="0.8"/>
-        <circle cx="18" cy="34" r="1.2" fill="#ff6b6b"/>
-      </svg>`;
-    document.body.appendChild(cursor);
-
-    // Glow orb that lags behind
+  if (!isTouch) {
+    // Create elements
+    const dot  = document.createElement("div");
+    const ring = document.createElement("div");
     const glow = document.createElement("div");
+    dot.className  = "cursor-dot";
+    ring.className = "cursor-ring";
     glow.className = "cursor-glow";
-    document.body.appendChild(glow);
+    document.body.append(dot, ring, glow);
 
     let mouseX = 0, mouseY = 0;
-    let glowX = 0,  glowY = 0;
-    let lastSparkX = 0, lastSparkY = 0;
+    let ringX  = 0, ringY  = 0;
+    let glowX  = 0, glowY  = 0;
 
+    // Dot snaps instantly via JS (no CSS transition on position)
     document.addEventListener("mousemove", (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-
-      // Move the trident instantly
-      cursor.style.left = mouseX + "px";
-      cursor.style.top  = mouseY + "px";
-
-      // Spawn spark trail every 18px of movement
-      const dx = mouseX - lastSparkX;
-      const dy = mouseY - lastSparkY;
-      if (Math.sqrt(dx*dx + dy*dy) > 18) {
-        const spark = document.createElement("div");
-        spark.className = "cursor-spark";
-        spark.style.left = mouseX + "px";
-        spark.style.top  = mouseY + "px";
-        spark.style.width  = (Math.random() * 3 + 2) + "px";
-        spark.style.height = spark.style.width;
-        spark.style.background = Math.random() > 0.5 ? "#c0392b" : "#e74c3c";
-        document.body.appendChild(spark);
-        setTimeout(() => spark.remove(), 600);
-        lastSparkX = mouseX;
-        lastSparkY = mouseY;
-      }
+      dot.style.left = mouseX + "px";
+      dot.style.top  = mouseY + "px";
     });
 
-    // Smooth glow lag
-    (function animateGlow() {
-      glowX += (mouseX - glowX) * 0.07;
-      glowY += (mouseY - glowY) * 0.07;
+    // Ring + glow lag behind with lerp
+    (function animateCursor() {
+      // Ring — medium lag
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      ring.style.left = ringX + "px";
+      ring.style.top  = ringY + "px";
+
+      // Glow — slow lag
+      glowX += (mouseX - glowX) * 0.05;
+      glowY += (mouseY - glowY) * 0.05;
       glow.style.left = glowX + "px";
       glow.style.top  = glowY + "px";
-      requestAnimationFrame(animateGlow);
+
+      requestAnimationFrame(animateCursor);
     })();
 
-    // Scale up on hoverable elements
-    const hoverEls = document.querySelectorAll("a, button, .music-card, .vid-card, .gallery__item, .impact-stat, select");
-    hoverEls.forEach(el => {
-      el.addEventListener("mouseenter", () => cursor.classList.add("cursor-hover"));
-      el.addEventListener("mouseleave", () => cursor.classList.remove("cursor-hover"));
+    // Hover state — expand ring, colour dot red
+    const clickables = "a, button, .music-card, .vid-card, .gallery__item, .impact-stat, .nav__logo, select, label";
+    document.querySelectorAll(clickables).forEach(el => {
+      el.addEventListener("mouseenter", () => {
+        dot.classList.add("is-hovering");
+        ring.classList.add("is-hovering");
+      });
+      el.addEventListener("mouseleave", () => {
+        dot.classList.remove("is-hovering");
+        ring.classList.remove("is-hovering");
+      });
+    });
+
+    // Text input state — cursor becomes a caret
+    const textEls = "input, textarea, [contenteditable]";
+    document.querySelectorAll(textEls).forEach(el => {
+      el.addEventListener("mouseenter", () => {
+        dot.classList.add("is-text");
+        ring.classList.add("is-text");
+      });
+      el.addEventListener("mouseleave", () => {
+        dot.classList.remove("is-text");
+        ring.classList.remove("is-text");
+      });
+    });
+
+    // Click state — compress both
+    document.addEventListener("mousedown", () => {
+      dot.classList.add("is-clicking");
+      ring.classList.add("is-clicking");
+    });
+    document.addEventListener("mouseup", () => {
+      dot.classList.remove("is-clicking");
+      ring.classList.remove("is-clicking");
     });
 
     // Hide when leaving window
-    document.addEventListener("mouseleave", () => { cursor.style.opacity = "0"; glow.style.opacity = "0"; });
-    document.addEventListener("mouseenter", () => { cursor.style.opacity = "1"; glow.style.opacity = "1"; });
+    document.addEventListener("mouseleave", () => {
+      dot.style.opacity  = "0";
+      ring.style.opacity = "0";
+    });
+    document.addEventListener("mouseenter", () => {
+      dot.style.opacity  = "1";
+      ring.style.opacity = "1";
+    });
   }
 
   /* ── Nav scroll state (throttled) ────────────────────────── */
