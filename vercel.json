@@ -1,44 +1,26 @@
 {
   "version": 2,
   "name": "rema-artist-website",
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" }
       ]
     },
     {
-      "source": "/video/(.*)",
+      "source": "/style.css",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
-        { "key": "Accept-Ranges", "value": "bytes" }
+        { "key": "Cache-Control", "value": "public, max-age=86400" },
+        { "key": "Content-Type", "value": "text/css; charset=utf-8" }
       ]
     },
     {
-      "source": "/image/(.*)",
+      "source": "/script.js",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/(style\\.css|script\\.js)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
+        { "key": "Cache-Control", "value": "public, max-age=86400" },
+        { "key": "Content-Type", "value": "application/javascript; charset=utf-8" }
       ]
     }
   ]
