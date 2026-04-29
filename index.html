@@ -1,0 +1,558 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REMA &mdash; Afro-Rave Pioneer</title>
+  <meta name="description" content="Divine Joshua Ikubor. Grammy-nominated Afro-Rave pioneer from Benin City, Nigeria." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav__logo">REMA</div>
+    <ul class="nav__links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#music">Music</a></li>
+      <li><a href="#videos">Videos</a></li>
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#contact" class="nav__cta">Work With Me</a></li>
+    </ul>
+    <button class="nav__burger" id="navBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#about"   class="mobile-link">About</a></li>
+      <li><a href="#music"   class="mobile-link">Music</a></li>
+      <li><a href="#videos"  class="mobile-link">Videos</a></li>
+      <li><a href="#impact"  class="mobile-link">Impact</a></li>
+      <li><a href="#contact" class="mobile-link">Work With Me</a></li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       HERO — Calm Down
+  ═══════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="vid-bg">
+      <video autoplay muted loop playsinline>
+        <source src="video/Rema, Selena Gomez - Calm Down (Official Music Video)_1080p.mp4" type="video/mp4" />
+      </video>
+      <div class="vid-bg__overlay"></div>
+      <div class="vid-bg__grain"></div>
+      <div class="vid-label"><span class="vid-label__dot"></span>Calm Down &mdash; ft. Selena Gomez</div>
+    </div>
+
+    <div class="hero__particles" id="particles"></div>
+
+    <div class="hero__content">
+      <div class="hero__eyebrow reveal-up">
+        <span class="hero__dot"></span>
+        Grammy Nominated &middot; Afro-Rave Pioneer
+        <span class="hero__dot"></span>
+      </div>
+      <h1 class="hero__title reveal-up" data-delay="0.1">REMA</h1>
+      <p class="hero__tagline reveal-up" data-delay="0.25">Redefining Afrobeats. Globally.</p>
+      <div class="hero__actions reveal-up" data-delay="0.4">
+        <a href="#contact" class="btn btn--primary">
+          <span>Work With Me</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#videos" class="btn btn--ghost"><span>Watch Videos</span></a>
+      </div>
+    </div>
+
+    <div class="hero__scroll">
+      <div class="hero__scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+
+    <div class="hero__stats">
+      <div class="hero__stat">
+        <span class="hero__stat-num">2B+</span>
+        <span class="hero__stat-label">Spotify Streams</span>
+      </div>
+      <div class="hero__stat-divider"></div>
+      <div class="hero__stat">
+        <span class="hero__stat-num">#3</span>
+        <span class="hero__stat-label">Billboard Hot 100</span>
+      </div>
+      <div class="hero__stat-divider"></div>
+      <div class="hero__stat">
+        <span class="hero__stat-num">58</span>
+        <span class="hero__stat-label">Weeks Afrobeats #1</span>
+      </div>
+      <div class="hero__stat-divider"></div>
+      <div class="hero__stat">
+        <span class="hero__stat-num">1B+</span>
+        <span class="hero__stat-label">YouTube Views</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker__track">
+      <span>CALM DOWN</span><span class="ticker__dot">&#10022;</span>
+      <span>RAVE &amp; ROSES</span><span class="ticker__dot">&#10022;</span>
+      <span>HEIS</span><span class="ticker__dot">&#10022;</span>
+      <span>AFRO-RAVE</span><span class="ticker__dot">&#10022;</span>
+      <span>GRAMMY NOMINATED</span><span class="ticker__dot">&#10022;</span>
+      <span>BENIN CITY</span><span class="ticker__dot">&#10022;</span>
+      <span>GLOBAL ICON</span><span class="ticker__dot">&#10022;</span>
+      <span>CALM DOWN</span><span class="ticker__dot">&#10022;</span>
+      <span>RAVE &amp; ROSES</span><span class="ticker__dot">&#10022;</span>
+      <span>HEIS</span><span class="ticker__dot">&#10022;</span>
+      <span>AFRO-RAVE</span><span class="ticker__dot">&#10022;</span>
+      <span>GRAMMY NOMINATED</span><span class="ticker__dot">&#10022;</span>
+      <span>BENIN CITY</span><span class="ticker__dot">&#10022;</span>
+      <span>GLOBAL ICON</span><span class="ticker__dot">&#10022;</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       ABOUT — Charm video bg
+  ═══════════════════════════════════════ -->
+  <section class="about section" id="about">
+    <div class="vid-bg vid-bg--section">
+      <video autoplay muted loop playsinline>
+        <source src="video/Rema - Charm (Official Music Video)_2160p.mp4" type="video/mp4" />
+      </video>
+      <div class="vid-bg__overlay vid-bg__overlay--dark"></div>
+      <div class="vid-bg__grain"></div>
+      <div class="vid-label"><span class="vid-label__dot"></span>Charm</div>
+    </div>
+    <div class="container">
+      <div class="about__grid">
+        <div class="about__visual">
+          <div class="about__img-wrap reveal-left">
+            <img src="image/just rema.jpg"
+              alt="Rema - Divine Joshua Ikubor" class="about__img" loading="lazy" />
+            <div class="about__img-overlay"></div>
+            <div class="about__img-badge">
+              <span>Born</span><strong>May 1, 2000</strong><span>Benin City, Nigeria</span>
+            </div>
+          </div>
+          <div class="about__accent-block reveal-left" data-delay="0.15"></div>
+        </div>
+        <div class="about__text">
+          <div class="section__label reveal-up">About the Artist</div>
+          <h2 class="section__title reveal-up" data-delay="0.1">Divine.<br/><em>Unstoppable.</em></h2>
+          <div class="about__body reveal-up" data-delay="0.2">
+            <p>Born Divine Joshua Ikubor in Benin City, Nigeria, Rema emerged from humble beginnings to become one of the most electrifying voices in global music. Raised by his mother after losing his father and elder brother, he channeled grief into art &mdash; and the world listened.</p>
+            <p>At just 19, a viral Instagram freestyle caught the attention of D'Prince, landing him a deal with Jonzing World &mdash; a subsidiary of Don Jazzy's legendary Mavin Records. His debut EP immediately topped Apple Music Nigeria.</p>
+            <p>Rema invented <strong>Afro-Rave</strong> &mdash; a genre-defying fusion of Afrobeats, Arabian and Indian influences, house, and hip-hop. His sound doesn't follow trends. It creates them.</p>
+          </div>
+          <div class="about__tags reveal-up" data-delay="0.3">
+            <span class="tag">Afro-Rave</span>
+            <span class="tag">Afrobeats</span>
+            <span class="tag">Trap</span>
+            <span class="tag">Pop Rap</span>
+            <span class="tag">African Hip-Hop</span>
+          </div>
+          <a href="#contact" class="btn btn--primary reveal-up" data-delay="0.4">
+            <span>Partner With Rema</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       MUSIC HIGHLIGHTS
+  ═══════════════════════════════════════ -->
+  <section class="music section" id="music">
+    <div class="container">
+      <div class="section__header">
+        <div class="section__label reveal-up">Discography</div>
+        <h2 class="section__title reveal-up" data-delay="0.1">Music That<br/><em>Moves the World</em></h2>
+        <p class="section__sub reveal-up" data-delay="0.2">From Benin City to the Billboard Hot 100 &mdash; every release a statement.</p>
+      </div>
+      <div class="music__grid">
+        <div class="music-card reveal-up" data-delay="0.1">
+          <div class="music-card__img-wrap">
+            <img src="https://img.youtube.com/vi/WcIcVapfqXw/maxresdefault.jpg" alt="Calm Down" loading="lazy" />
+            <div class="music-card__overlay">
+              <a href="https://open.spotify.com/track/0WtM2NBus2YxNiXHhOMuwT" target="_blank" rel="noopener" class="music-card__play" aria-label="Play Calm Down">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </a>
+            </div>
+            <div class="music-card__badge">Billboard #3</div>
+          </div>
+          <div class="music-card__info">
+            <span class="music-card__year">2022</span>
+            <h3 class="music-card__title">Calm Down</h3>
+            <p class="music-card__sub">ft. Selena Gomez &middot; 58 weeks Afrobeats #1</p>
+            <div class="music-card__bar"><div class="music-card__bar-fill" style="--w:98%"></div></div>
+          </div>
+        </div>
+        <div class="music-card music-card--featured reveal-up" data-delay="0.2">
+          <div class="music-card__img-wrap">
+            <img src="https://img.youtube.com/vi/YkLjqFpBh84/maxresdefault.jpg" alt="Rave and Roses" loading="lazy" />
+            <div class="music-card__overlay">
+              <a href="https://open.spotify.com/album/1RM6MGv6bcl6NnNWfCH5Zl" target="_blank" rel="noopener" class="music-card__play" aria-label="Play Rave and Roses">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </a>
+            </div>
+            <div class="music-card__badge music-card__badge--gold">2B+ Streams</div>
+          </div>
+          <div class="music-card__info">
+            <span class="music-card__year">2022</span>
+            <h3 class="music-card__title">Rave &amp; Roses</h3>
+            <p class="music-card__sub">Debut Album &middot; Billboard 200 &middot; First African album 2B Spotify streams</p>
+            <div class="music-card__bar"><div class="music-card__bar-fill" style="--w:100%"></div></div>
+          </div>
+        </div>
+        <div class="music-card reveal-up" data-delay="0.3">
+          <div class="music-card__img-wrap">
+            <img src="https://img.youtube.com/vi/MsZhYgo9MoA/maxresdefault.jpg" alt="HEIS" loading="lazy" />
+            <div class="music-card__overlay">
+              <a href="https://open.spotify.com/album/5r36AJ6VOJtp00oxSkBZ5h" target="_blank" rel="noopener" class="music-card__play" aria-label="Play HEIS">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </a>
+            </div>
+            <div class="music-card__badge music-card__badge--red">Grammy Nom.</div>
+          </div>
+          <div class="music-card__info">
+            <span class="music-card__year">2024</span>
+            <h3 class="music-card__title">HEIS</h3>
+            <p class="music-card__sub">Sophomore Album &middot; Grammy Nominated &middot; Best Global Music Album</p>
+            <div class="music-card__bar"><div class="music-card__bar-fill" style="--w:90%"></div></div>
+          </div>
+        </div>
+        <div class="music-card reveal-up" data-delay="0.4">
+          <div class="music-card__img-wrap">
+            <img src="https://www.heisrema.com/wp-content/uploads/sites/2684/2025/08/artwork-440x440-1-compressed.jpg" alt="Baby Is It A Crime" loading="lazy" />
+            <div class="music-card__overlay">
+              <a href="https://open.spotify.com/track/4cluDES4hQEUhmXj6TXkSo" target="_blank" rel="noopener" class="music-card__play" aria-label="Play Baby Is It A Crime">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              </a>
+            </div>
+            <div class="music-card__badge">2025</div>
+          </div>
+          <div class="music-card__info">
+            <span class="music-card__year">2025</span>
+            <h3 class="music-card__title">Baby (Is It a Crime)</h3>
+            <p class="music-card__sub">Samples Sade &middot; Most streamed Nigerian song 2025</p>
+            <div class="music-card__bar"><div class="music-card__bar-fill" style="--w:75%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       QUOTE — KELEBU video bg
+  ═══════════════════════════════════════ -->
+  <section class="quote-section">
+    <div class="vid-bg vid-bg--section">
+      <video autoplay muted loop playsinline>
+        <source src="video/Rema - KELEBU (Official Dance Video)_2160p.mp4" type="video/mp4" />
+      </video>
+      <div class="vid-bg__overlay vid-bg__overlay--heavy"></div>
+      <div class="vid-bg__grain"></div>
+      <div class="vid-label"><span class="vid-label__dot"></span>KELEBU</div>
+    </div>
+    <div class="container">
+      <blockquote class="quote reveal-up">
+        <span class="quote__mark">&ldquo;</span>
+        <p>Rema has undoubtedly and proudly become an emblem of Afrobeats&rsquo; global rise.</p>
+        <cite>&mdash; Rolling Stone</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       VIDEO REEL — all 5 videos as cards
+  ═══════════════════════════════════════ -->
+  <section class="videos section" id="videos">
+    <div class="container">
+      <div class="section__header">
+        <div class="section__label reveal-up">Official Videos</div>
+        <h2 class="section__title reveal-up" data-delay="0.1">The Visual<br/><em>Universe</em></h2>
+        <p class="section__sub reveal-up" data-delay="0.2">Every frame a statement. Hover to preview.</p>
+      </div>
+    </div>
+
+    <div class="vids-grid">
+
+      <!-- Card 1: Calm Down -->
+      <div class="vid-card reveal-up" data-delay="0.05">
+        <div class="vid-card__media">
+          <video class="vid-card__video" autoplay muted loop playsinline preload="auto">
+            <source src="video/Rema, Selena Gomez - Calm Down (Official Music Video)_1080p.mp4" type="video/mp4" />
+          </video>
+          <div class="vid-card__overlay"></div>
+          <div class="vid-card__play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="vid-card__play-hint">Hover for sound &middot; Click for fullscreen</div>
+        </div>
+        <div class="vid-card__info">
+          <span class="vid-card__badge">2022 &middot; Billboard #3</span>
+          <h3 class="vid-card__title">Calm Down</h3>
+          <p class="vid-card__sub">ft. Selena Gomez &middot; 1B+ YouTube Views</p>
+        </div>
+      </div>
+
+      <!-- Card 2: AZAMAN -->
+      <div class="vid-card reveal-up" data-delay="0.1">
+        <div class="vid-card__media">
+          <video class="vid-card__video" autoplay muted loop playsinline preload="auto">
+            <source src="video/Rema - AZAMAN_2160p.mp4" type="video/mp4" />
+          </video>
+          <div class="vid-card__overlay"></div>
+          <div class="vid-card__play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="vid-card__play-hint">Hover for sound &middot; Click for fullscreen</div>
+        </div>
+        <div class="vid-card__info">
+          <span class="vid-card__badge">HEIS Era &middot; 2024</span>
+          <h3 class="vid-card__title">AZAMAN</h3>
+          <p class="vid-card__sub">From the Grammy-nominated album HEIS</p>
+        </div>
+      </div>
+
+      <!-- Card 3: Charm -->
+      <div class="vid-card reveal-up" data-delay="0.15">
+        <div class="vid-card__media">
+          <video class="vid-card__video" autoplay muted loop playsinline preload="auto">
+            <source src="video/Rema - Charm (Official Music Video)_2160p.mp4" type="video/mp4" />
+          </video>
+          <div class="vid-card__overlay"></div>
+          <div class="vid-card__play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="vid-card__play-hint">Hover for sound &middot; Click for fullscreen</div>
+        </div>
+        <div class="vid-card__info">
+          <span class="vid-card__badge">Rave &amp; Roses Ultra &middot; 2023</span>
+          <h3 class="vid-card__title">Charm</h3>
+          <p class="vid-card__sub">Rave &amp; Roses Ultra &mdash; global fan favourite</p>
+        </div>
+      </div>
+
+      <!-- Card 4: KELEBU -->
+      <div class="vid-card reveal-up" data-delay="0.2">
+        <div class="vid-card__media">
+          <video class="vid-card__video" autoplay muted loop playsinline preload="auto">
+            <source src="video/Rema - KELEBU (Official Dance Video)_2160p.mp4" type="video/mp4" />
+          </video>
+          <div class="vid-card__overlay"></div>
+          <div class="vid-card__play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="vid-card__play-hint">Hover for sound &middot; Click for fullscreen</div>
+        </div>
+        <div class="vid-card__info">
+          <span class="vid-card__badge">2025 &middot; Latest</span>
+          <h3 class="vid-card__title">KELEBU</h3>
+          <p class="vid-card__sub">Official Dance Video &mdash; 2025</p>
+        </div>
+      </div>
+
+      <!-- Card 5: Who's Dat Girl -->
+      <div class="vid-card reveal-up" data-delay="0.25">
+        <div class="vid-card__media">
+          <video class="vid-card__video" autoplay muted loop playsinline preload="auto">
+            <source src="video/Ayra Starr, Rema - Who's Dat Girl_2160p.mp4" type="video/mp4" />
+          </video>
+          <div class="vid-card__overlay"></div>
+          <div class="vid-card__play">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <div class="vid-card__play-hint">Hover for sound &middot; Click for fullscreen</div>
+        </div>
+        <div class="vid-card__info">
+          <span class="vid-card__badge">Collab &middot; Ayra Starr</span>
+          <h3 class="vid-card__title">Who&rsquo;s Dat Girl</h3>
+          <p class="vid-card__sub">ft. Ayra Starr &mdash; Mavin Records</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       IMPACT — Who's Dat Girl video bg
+  ═══════════════════════════════════════ -->
+  <section class="impact section" id="impact">
+    <div class="vid-bg vid-bg--section">
+      <video autoplay muted loop playsinline>
+        <source src="video/Ayra Starr, Rema - Who's Dat Girl_2160p.mp4" type="video/mp4" />
+      </video>
+      <div class="vid-bg__overlay vid-bg__overlay--heavy"></div>
+      <div class="vid-bg__grain"></div>
+      <div class="vid-label"><span class="vid-label__dot"></span>Who&rsquo;s Dat Girl &mdash; ft. Ayra Starr</div>
+    </div>
+    <div class="container">
+      <div class="section__header">
+        <div class="section__label reveal-up">By the Numbers</div>
+        <h2 class="section__title reveal-up" data-delay="0.1">A Legacy<br/><em>Being Written</em></h2>
+      </div>
+      <div class="impact__grid">
+        <div class="impact-stat reveal-up" data-delay="0.1">
+          <div class="impact-stat__num" data-count="2">0</div>
+          <div class="impact-stat__unit">Billion+</div>
+          <div class="impact-stat__label">Spotify Streams<br/>(Rave &amp; Roses Ultra)</div>
+        </div>
+        <div class="impact-stat reveal-up" data-delay="0.2">
+          <div class="impact-stat__num" data-count="58">0</div>
+          <div class="impact-stat__unit">Weeks</div>
+          <div class="impact-stat__label">Billboard Afrobeats<br/>Chart #1</div>
+        </div>
+        <div class="impact-stat reveal-up" data-delay="0.3">
+          <div class="impact-stat__num" data-count="1">0</div>
+          <div class="impact-stat__unit">Billion+</div>
+          <div class="impact-stat__label">YouTube Views<br/>(Calm Down)</div>
+        </div>
+        <div class="impact-stat reveal-up" data-delay="0.4">
+          <div class="impact-stat__num" data-count="3">0</div>
+          <div class="impact-stat__unit">Billboard</div>
+          <div class="impact-stat__label">Hot 100 Peak<br/>Position</div>
+        </div>
+      </div>
+      <div class="achievements reveal-up" data-delay="0.3">
+        <div class="achievement">
+          <div class="achievement__icon">&#10022;</div>
+          <div class="achievement__text"><strong>Grammy Nomination</strong> &mdash; Best Global Music Album, 67th Annual Grammy Awards (HEIS, 2024)</div>
+        </div>
+        <div class="achievement">
+          <div class="achievement__icon">&#10022;</div>
+          <div class="achievement__text"><strong>MTV VMA</strong> &mdash; Best Afrobeats Video (Calm Down ft. Selena Gomez)</div>
+        </div>
+        <div class="achievement">
+          <div class="achievement__icon">&#10022;</div>
+          <div class="achievement__text"><strong>Billboard Music Award</strong> &mdash; Top Afrobeats Song</div>
+        </div>
+        <div class="achievement">
+          <div class="achievement__icon">&#10022;</div>
+          <div class="achievement__text"><strong>Ballon d&rsquo;Or Ceremony</strong> &mdash; Performed at Th&eacute;&acirc;tre du Ch&acirc;telet, Paris (2023)</div>
+        </div>
+        <div class="achievement">
+          <div class="achievement__icon">&#10022;</div>
+          <div class="achievement__text"><strong>Obama Summer Playlist</strong> &mdash; Featured by former US President Barack Obama (2019)</div>
+        </div>
+        <div class="achievement">
+          <div class="achievement__icon">&#10022;</div>
+          <div class="achievement__text"><strong>Most-Streamed Nigerian Artist</strong> &mdash; YouTube 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESS -->
+  <section class="press section">
+    <div class="container">
+      <div class="section__label reveal-up" style="text-align:center;margin-bottom:2.5rem;">As Seen In</div>
+      <div class="press__logos reveal-up" data-delay="0.1">
+        <span class="press__logo">Rolling Stone</span><span class="press__sep">&middot;</span>
+        <span class="press__logo">Billboard</span><span class="press__sep">&middot;</span>
+        <span class="press__logo">Pitchfork</span><span class="press__sep">&middot;</span>
+        <span class="press__logo">GQ</span><span class="press__sep">&middot;</span>
+        <span class="press__logo">The Guardian</span><span class="press__sep">&middot;</span>
+        <span class="press__logo">HOT 97</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       CONTACT — AZAMAN video bg
+  ═══════════════════════════════════════ -->
+  <section class="contact section" id="contact">
+    <div class="vid-bg vid-bg--section">
+      <video autoplay muted loop playsinline>
+        <source src="video/Rema - AZAMAN_2160p.mp4" type="video/mp4" />
+      </video>
+      <div class="vid-bg__overlay vid-bg__overlay--heavy"></div>
+      <div class="vid-bg__grain"></div>
+      <div class="vid-label"><span class="vid-label__dot"></span>AZAMAN</div>
+    </div>
+    <div class="contact__lines"></div>
+    <div class="container">
+      <div class="contact__inner">
+        <div class="section__label reveal-up" style="color:var(--red)">Record Label Outreach</div>
+        <h2 class="contact__title reveal-up" data-delay="0.1">Ready to Build<br/><em>Something Historic?</em></h2>
+        <p class="contact__sub reveal-up" data-delay="0.2">Rema is a proven global force &mdash; Grammy-nominated, Billboard-charting, and genre-defining. If you&rsquo;re a record label, brand, or creative partner looking to collaborate with one of Africa&rsquo;s most electrifying artists, let&rsquo;s talk.</p>
+        <form class="contact__form reveal-up" data-delay="0.3" id="contactForm" novalidate>
+          <div class="form__row">
+            <div class="form__group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="John Smith" required autocomplete="name" />
+            </div>
+            <div class="form__group">
+              <label for="label">Label / Company</label>
+              <input type="text" id="label" name="label" placeholder="Universal Music Group" required />
+            </div>
+          </div>
+          <div class="form__row">
+            <div class="form__group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="contact@label.com" required autocomplete="email" />
+            </div>
+            <div class="form__group">
+              <label for="type">Inquiry Type</label>
+              <select id="type" name="type" required>
+                <option value="" disabled selected>Select type</option>
+                <option value="record-deal">Record Deal</option>
+                <option value="distribution">Distribution</option>
+                <option value="brand-partnership">Brand Partnership</option>
+                <option value="sync-licensing">Sync Licensing</option>
+                <option value="tour">Tour / Live Events</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form__group form__group--full">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell us about your vision and how you'd like to collaborate with Rema..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--large">
+            <span>Send Inquiry</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </form>
+        <div class="contact__success" id="formSuccess" aria-live="polite">
+          <div class="contact__success-icon">&#10022;</div>
+          <h3>Message Received</h3>
+          <p>We&rsquo;ll be in touch within 48 hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__logo">REMA</div>
+          <p class="footer__tagline">Afro-Rave Pioneer &middot; Global Icon</p>
+        </div>
+        <div class="footer__links">
+          <a href="https://www.heisrema.com" target="_blank" rel="noopener">Official Site</a>
+          <a href="https://open.spotify.com/artist/46pWGuE3dSwY3bMMXGBvVS" target="_blank" rel="noopener">Spotify</a>
+          <a href="https://www.instagram.com/heisrema/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.youtube.com/@Rema" target="_blank" rel="noopener">YouTube</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2025 Rema / Jonzing World / Mavin Records / Interscope Records</p>
+        <p class="footer__credit">Concept site &mdash; not affiliated with official management</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
