@@ -98,6 +98,86 @@
     }
   }, 40);
 
+  /* ── Devil Staff Cursor — Dark & Realistic ───────────────── */
+  const isTouch = window.matchMedia("(hover: none)").matches;
+
+  if (!isTouch) {
+    const cursor = document.createElement("div");
+    cursor.className = "cursor-main";
+    cursor.innerHTML = `<svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="shaftGrad" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#3a0a0a"/>
+          <stop offset="40%"  stop-color="#8b1a1a"/>
+          <stop offset="100%" stop-color="#2a0505"/>
+        </linearGradient>
+        <linearGradient id="prongGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="#cc2200"/>
+          <stop offset="60%"  stop-color="#7a1010"/>
+          <stop offset="100%" stop-color="#1a0505"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="1.2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <path d="M21 15 L20 42 L22 42 L23 15 Z" fill="url(#shaftGrad)"/>
+      <line x1="21.5" y1="15" x2="21" y2="41" stroke="rgba(200,80,60,0.35)" stroke-width="0.6"/>
+      <path d="M21.5 3 L21.5 17" stroke="url(#prongGrad)" stroke-width="2.8" stroke-linecap="round" filter="url(#glow)"/>
+      <path d="M21.5 7 C17 5 14 8 14 13 C14 16 16.5 17 18.5 16.5" stroke="url(#prongGrad)" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M21.5 7 C26 5 28 8 28 13 C28 16 25.5 17 23.5 16.5" stroke="url(#prongGrad)" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M14 10 L12 5 L16 9" stroke="#991111" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M28 10 L30 5 L26 9" stroke="#991111" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M21.5 1 L20.5 5 L21.5 4 L22.5 5 Z" fill="#dd2200"/>
+      <rect x="16" y="14.5" width="11" height="2" rx="1" fill="#5a1010"/>
+      <rect x="17" y="14.8" width="9" height="1.2" rx="0.6" fill="#8b2020"/>
+      <ellipse cx="21.5" cy="41.5" rx="2.2" ry="1.4" fill="#3a0808"/>
+      <ellipse cx="21.5" cy="41.2" rx="1.4" ry="0.8" fill="#7a1515"/>
+      <circle cx="21.5" cy="41.5" r="2.8" fill="rgba(180,20,5,0.18)"/>
+    </svg>`;
+    document.body.appendChild(cursor);
+
+    const glow = document.createElement("div");
+    glow.className = "cursor-glow";
+    document.body.appendChild(glow);
+
+    let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
+    let lastSmokeX = 0, lastSmokeY = 0;
+
+    document.addEventListener("mousemove", (e) => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX + "px";
+      cursor.style.top  = mouseY + "px";
+      const dx = mouseX - lastSmokeX, dy = mouseY - lastSmokeY;
+      if (Math.sqrt(dx*dx + dy*dy) > 14) {
+        const s = document.createElement("div");
+        s.className = "cursor-smoke";
+        const sz = Math.random() * 7 + 5;
+        s.style.cssText = `left:${mouseX}px;top:${mouseY}px;width:${sz}px;height:${sz}px;background:${Math.random()>0.5?"radial-gradient(circle,rgba(60,5,5,0.55) 0%,transparent 70%)":"radial-gradient(circle,rgba(140,20,10,0.35) 0%,transparent 70%)"};`;
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 900);
+        lastSmokeX = mouseX; lastSmokeY = mouseY;
+      }
+    });
+
+    (function animateGlow() {
+      glowX += (mouseX - glowX) * 0.06;
+      glowY += (mouseY - glowY) * 0.06;
+      glow.style.left = glowX + "px";
+      glow.style.top  = glowY + "px";
+      requestAnimationFrame(animateGlow);
+    })();
+
+    document.querySelectorAll("a,button,.music-card,.vid-card,.gallery__item,.impact-stat,.nav__logo,select").forEach(el => {
+      el.addEventListener("mouseenter", () => cursor.classList.add("is-hovering"));
+      el.addEventListener("mouseleave", () => cursor.classList.remove("is-hovering"));
+    });
+    document.addEventListener("mousedown", () => cursor.classList.add("is-clicking"));
+    document.addEventListener("mouseup",   () => cursor.classList.remove("is-clicking"));
+    document.addEventListener("mouseleave", () => { cursor.style.opacity="0"; glow.style.opacity="0"; });
+    document.addEventListener("mouseenter", () => { cursor.style.opacity="1"; glow.style.opacity="1"; });
+  }
+
   /* ── Nav scroll state (throttled) ────────────────────────── */
   const nav = document.getElementById("nav");
   let ticking = false;

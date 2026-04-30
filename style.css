@@ -1212,9 +1212,71 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .container { padding: 0 1rem; }
 }
 
-/* ── Glow orb */
+/* ── Devil Staff Cursor — Dark & Realistic ────────────────── */
+
+*, *::before, *::after { cursor: none !important; }
+
+.cursor-main {
+  position: fixed;
+  top: 0; left: 0;
+  width: 44px; height: 44px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-6px, -4px) rotate(-15deg);
+  will-change: left, top;
+  filter:
+    drop-shadow(0 0 4px rgba(180,20,10,0.95))
+    drop-shadow(0 0 12px rgba(140,10,5,0.7))
+    drop-shadow(0 0 28px rgba(100,0,0,0.4));
+  transition: filter 0.25s ease, transform 0.2s ease;
+}
+.cursor-main svg { width: 100%; height: 100%; }
+
+.cursor-main.is-hovering {
+  transform: translate(-6px, -4px) rotate(-15deg) scale(1.2);
+  filter:
+    drop-shadow(0 0 6px rgba(220,30,10,1))
+    drop-shadow(0 0 18px rgba(180,20,5,0.85))
+    drop-shadow(0 0 40px rgba(120,0,0,0.6));
+}
+.cursor-main.is-clicking {
+  transform: translate(-6px, -4px) rotate(-15deg) scale(0.88);
+}
+
+.cursor-smoke {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99997;
+  transform: translate(-50%, -50%);
+  animation: smokeRise 0.9s ease-out forwards;
+  will-change: transform, opacity;
+}
+@keyframes smokeRise {
+  0%   { opacity: 0.55; transform: translate(-50%,-50%) scale(1); }
+  60%  { opacity: 0.2; }
+  100% { opacity: 0; transform: translate(-50%, calc(-50% - 22px)) scale(2.2); }
+}
+
+/* Glow orb */
 .cursor-glow {
-  display: none;
+  position: fixed;
+  width: 240px; height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(160,10,5,0.08) 0%,
+    rgba(100,0,0,0.04) 45%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 9997;
+  transform: translate(-50%, -50%);
+  will-change: left, top;
+}
+
+@media (hover: none) {
+  *, *::before, *::after { cursor: auto !important; }
+  .cursor-main, .cursor-glow, .cursor-smoke { display: none; }
 }
 
 /* ═══════════════════════════════════════════════════════════
