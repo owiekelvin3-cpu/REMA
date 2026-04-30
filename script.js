@@ -34,16 +34,13 @@
     resolved = true;
     setProgress(100);
 
-    // Short pause at 100% so user sees it complete
     setTimeout(() => {
       loader.classList.add("loader-done");
       document.documentElement.classList.remove("is-loading");
       document.documentElement.classList.add("is-loaded");
 
-      // Remove loader from DOM after transition ends
-      loader.addEventListener("transitionend", () => {
-        loader.remove();
-      }, { once: true });
+      // Remove loader from DOM after fade
+      setTimeout(() => loader.remove(), 500);
     }, 150);
   }
 
