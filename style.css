@@ -1214,14 +1214,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ── Devil Staff Cursor — Dark & Realistic ────────────────── */
 
-*, *::before, *::after { cursor: none !important; }
+/* Hide default cursor on the entire document */
+html, html *, html *::before, html *::after { cursor: none !important; }
 
 .cursor-main {
   position: fixed;
   top: 0; left: 0;
   width: 44px; height: 44px;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 999999;
   transform: translate(-6px, -4px) rotate(-15deg);
   will-change: left, top;
   filter:
@@ -1229,6 +1230,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     drop-shadow(0 0 12px rgba(140,10,5,0.7))
     drop-shadow(0 0 28px rgba(100,0,0,0.4));
   transition: filter 0.25s ease, transform 0.2s ease;
+  /* Ensure it's never clipped by overflow:hidden on parents */
+  contain: none;
 }
 .cursor-main svg { width: 100%; height: 100%; }
 
@@ -1269,13 +1272,13 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     transparent 70%
   );
   pointer-events: none;
-  z-index: 9997;
+  z-index: 999998;
   transform: translate(-50%, -50%);
   will-change: left, top;
 }
 
 @media (hover: none) {
-  *, *::before, *::after { cursor: auto !important; }
+  html, html *, html *::before, html *::after { cursor: auto !important; }
   .cursor-main, .cursor-glow, .cursor-smoke { display: none; }
 }
 
@@ -1627,11 +1630,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
    ═══════════════════════════════════════════════════════════ */
 
 /* Defer rendering of off-screen sections until near viewport */
-.music,
 .gallery,
-.impact,
-.press,
-.videos {
+.press {
   content-visibility: auto;
   contain-intrinsic-size: 0 600px;
 }
