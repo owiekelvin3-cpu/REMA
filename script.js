@@ -5,6 +5,110 @@
 (function () {
   "use strict";
 
+  /* ══════════════════════════════════════════════════════════
+     SITE LOADER
+     Tracks: images, videos (metadata), fonts, window.load
+     Shows progress bar + percentage, then fades out cleanly
+  ══════════════════════════════════════════════════════════ */
+  const loader    = document.getElementById("site-loader");
+  const loaderBar = document.getElementById("loaderBar");
+  const loaderPct = document.getElementById("loaderPct");
+
+  let total    = 0;
+  let loaded   = 0;
+  let resolved = false;
+
+  function setProgress(pct) {
+    const clamped = Math.min(100, Math.round(pct));
+    if (loaderBar) loaderBar.style.width = clamped + "%";
+    if (loaderPct) loaderPct.textContent  = clamped + "%";
+  }
+
+  function tick() {
+    if (total === 0) return;
+    setProgress((loaded / total) * 100);
+  }
+
+  function done() {
+    if (resolved) return;
+    resolved = true;
+    setProgress(100);
+
+    // Short pause at 100% so user sees it complete
+    setTimeout(() => {
+      loader.classList.add("loader-done");
+      document.documentElement.classList.remove("is-loading");
+      document.documentElement.classList.add("is-loaded");
+
+      // Remove loader from DOM after transition ends
+      loader.addEventListener("transitionend", () => {
+        loader.remove();
+      }, { once: true });
+    }, 380);
+  }
+
+  // ── Track images ──────────────────────────────────────────
+  const images = Array.from(document.querySelectorAll("img"));
+  images.forEach(img => {
+    if (img.complete) { loaded++; tick(); return; }
+    total++;
+    img.addEventListener("load",  () => { loaded++; tick(); checkDone(); }, { once: true });
+    img.addEventListener("error", () => { loaded++; tick(); checkDone(); }, { once: true });
+  });
+
+  // ── Track videos (only need metadata, not full download) ──
+  const videos = Array.from(document.querySelectorAll("video"));
+  videos.forEach(video => {
+    if (video.readyState >= 1) { loaded++; tick(); return; }
+    total++;
+    const onReady = () => { loaded++; tick(); checkDone(); };
+    video.addEventListener("loadedmetadata", onReady, { once: true });
+    video.addEventListener("error",          onReady, { once: true });
+    // Fallback: if video never fires, don't block forever
+    setTimeout(onReady, 6000);
+  });
+
+  // ── Track fonts via document.fonts ────────────────────────
+  total++;
+  document.fonts.ready.then(() => {
+    loaded++;
+    tick();
+    checkDone();
+  });
+
+  // ── window.load = final safety net ────────────────────────
+  total++;
+  window.addEventListener("load", () => {
+    loaded++;
+    tick();
+    checkDone();
+  }, { once: true });
+
+  // ── Minimum display time (600ms) so loader doesn't flash ──
+  const minTime = Date.now();
+
+  function checkDone() {
+    if (loaded < total) return;
+    const elapsed = Date.now() - minTime;
+    const wait    = Math.max(0, 600 - elapsed);
+    setTimeout(done, wait);
+  }
+
+  // ── Absolute timeout — never block longer than 8s ─────────
+  setTimeout(done, 8000);
+
+  // Animate progress bar smoothly even before assets report in
+  let fakeProgress = 0;
+  const fakeTimer = setInterval(() => {
+    if (resolved) { clearInterval(fakeTimer); return; }
+    // Crawl to 85% max, real progress takes over from there
+    if (fakeProgress < 85) {
+      fakeProgress += (85 - fakeProgress) * 0.04;
+      if (total === 0) setProgress(fakeProgress);
+      else setProgress(Math.max(fakeProgress, (loaded / total) * 100));
+    }
+  }, 80);
+
   /* ── Devil Staff Cursor — Dark & Realistic ───────────────── */
   const isTouch = window.matchMedia("(hover: none)").matches;
 

@@ -27,7 +27,9 @@
 
 html { scroll-behavior: smooth; font-size: 16px; }
 
+/* Body hidden until loader clears — visibility toggled by JS */
 body {
+  visibility: hidden;
   background: var(--black);
   color: var(--white);
   font-family: var(--font-body);

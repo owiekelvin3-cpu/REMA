@@ -9,8 +9,175 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Set loading class before any paint — prevents FOUC -->
+  <script>document.documentElement.classList.add('is-loading');</script>
+
+  <!-- ── Loader critical CSS — inline so it renders before style.css ── -->
+  <style>
+    /* Lock scroll and hide body content during load */
+    html.is-loading { overflow: hidden; }
+    html.is-loading body { visibility: hidden; }
+
+    /* Loader overlay — always visible on top */
+    #site-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: #080808;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      visibility: visible !important;
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+                  visibility 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    #site-loader.loader-done {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* REMA wordmark */
+    .loader-logo {
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      letter-spacing: 0.15em;
+      color: #f5f5f0;
+      line-height: 1;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: loaderLogoIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.1s forwards;
+    }
+    @keyframes loaderLogoIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tagline */
+    .loader-tagline {
+      font-family: "Inter", system-ui, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(245,245,240,0.4);
+      opacity: 0;
+      animation: loaderLogoIn 0.6s cubic-bezier(0.16,1,0.3,1) 0.35s forwards;
+    }
+
+    /* Progress bar track */
+    .loader-bar-track {
+      width: clamp(160px, 30vw, 280px);
+      height: 1px;
+      background: rgba(245,245,240,0.1);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      animation: loaderLogoIn 0.5s ease 0.5s forwards;
+    }
+    /* Progress bar fill */
+    .loader-bar-fill {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #c0392b, #e74c3c);
+      transition: width 0.3s ease;
+    }
+
+    /* Percentage counter */
+    .loader-pct {
+      font-family: "Bebas Neue", Impact, sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      color: #c0392b;
+      opacity: 0;
+      animation: loaderLogoIn 0.5s ease 0.5s forwards;
+      min-width: 3ch;
+      text-align: center;
+    }
+
+    /* Cursor-style spinner orbiting the logo */
+    .loader-orbit {
+      position: absolute;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      border: 1px solid rgba(192,57,43,0.2);
+      animation: loaderOrbit 2.4s linear infinite;
+      opacity: 0;
+      animation-delay: 0.6s;
+      animation-fill-mode: forwards;
+    }
+    .loader-orbit::after {
+      content: '';
+      position: absolute;
+      top: -3px; left: 50%;
+      transform: translateX(-50%);
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #c0392b;
+      box-shadow: 0 0 8px #c0392b, 0 0 16px rgba(192,57,43,0.5);
+    }
+    @keyframes loaderOrbit {
+      0%   { opacity: 0; transform: rotate(0deg); }
+      10%  { opacity: 1; }
+      100% { opacity: 1; transform: rotate(360deg); }
+    }
+
+    /* Inner orbit — opposite direction */
+    .loader-orbit-inner {
+      position: absolute;
+      width: 55px; height: 55px;
+      border-radius: 50%;
+      border: 1px solid rgba(245,245,240,0.07);
+      animation: loaderOrbitInner 1.6s linear infinite;
+      opacity: 0;
+      animation-delay: 0.8s;
+      animation-fill-mode: forwards;
+    }
+    .loader-orbit-inner::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 50%;
+      transform: translateX(-50%);
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: rgba(245,245,240,0.5);
+    }
+    @keyframes loaderOrbitInner {
+      0%   { opacity: 0; transform: rotate(0deg); }
+      10%  { opacity: 1; }
+      100% { opacity: 1; transform: rotate(-360deg); }
+    }
+
+    /* Body reveal after loader exits */
+    html.is-loaded body {
+      visibility: visible;
+      animation: bodyReveal 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    @keyframes bodyReveal {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
+
+  <!-- ══════════════════════════════════════
+       SITE LOADER — removed by JS on load
+  ══════════════════════════════════════ -->
+  <div id="site-loader" role="status" aria-label="Loading">
+    <div class="loader-orbit"></div>
+    <div class="loader-orbit-inner"></div>
+    <div class="loader-logo">REMA</div>
+    <div class="loader-tagline">Afro-Rave Pioneer</div>
+    <div class="loader-bar-track">
+      <div class="loader-bar-fill" id="loaderBar"></div>
+    </div>
+    <div class="loader-pct" id="loaderPct">0%</div>
+  </div>
 
   <!-- NAV -->
   <nav class="nav" id="nav">
