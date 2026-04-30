@@ -96,7 +96,8 @@
   }, 40);
 
   /* ── Devil Staff Cursor — Dark & Realistic ───────────────── */
-  const isTouch = window.matchMedia("(hover: none)").matches;
+  // Use pointer:fine to detect mouse (not touch) — more reliable than hover:none
+  const isTouch = !window.matchMedia("(pointer: fine)").matches;
 
   if (!isTouch) {
     const cursor = document.createElement("div");
@@ -132,31 +133,50 @@
       <ellipse cx="21.5" cy="41.2" rx="1.4" ry="0.8" fill="#7a1515"/>
       <circle cx="21.5" cy="41.5" r="2.8" fill="rgba(180,20,5,0.18)"/>
     </svg>`;
-    document.body.appendChild(cursor);
+
+    // Append directly to documentElement so no parent overflow/stacking clips it
+    document.documentElement.appendChild(cursor);
 
     const glow = document.createElement("div");
     glow.className = "cursor-glow";
-    document.body.appendChild(glow);
+    document.documentElement.appendChild(glow);
+
+    // Start hidden, show on first move
+    cursor.style.opacity = "0";
+    glow.style.opacity   = "0";
 
     let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
     let lastSmokeX = 0, lastSmokeY = 0;
+    let moved = false;
 
     document.addEventListener("mousemove", (e) => {
       mouseX = e.clientX; mouseY = e.clientY;
+
+      // Show on first move
+      if (!moved) {
+        moved = true;
+        cursor.style.opacity = "1";
+        glow.style.opacity   = "1";
+      }
+
+      // Position uses left/top (not transform) for performance
       cursor.style.left = mouseX + "px";
       cursor.style.top  = mouseY + "px";
+
+      // Smoke trail every 14px
       const dx = mouseX - lastSmokeX, dy = mouseY - lastSmokeY;
       if (Math.sqrt(dx*dx + dy*dy) > 14) {
         const s = document.createElement("div");
         s.className = "cursor-smoke";
         const sz = Math.random() * 7 + 5;
         s.style.cssText = `left:${mouseX}px;top:${mouseY}px;width:${sz}px;height:${sz}px;background:${Math.random()>0.5?"radial-gradient(circle,rgba(60,5,5,0.55) 0%,transparent 70%)":"radial-gradient(circle,rgba(140,20,10,0.35) 0%,transparent 70%)"};`;
-        document.body.appendChild(s);
+        document.documentElement.appendChild(s);
         setTimeout(() => s.remove(), 900);
         lastSmokeX = mouseX; lastSmokeY = mouseY;
       }
     });
 
+    // Smooth glow lag
     (function animateGlow() {
       glowX += (mouseX - glowX) * 0.06;
       glowY += (mouseY - glowY) * 0.06;
@@ -165,14 +185,20 @@
       requestAnimationFrame(animateGlow);
     })();
 
-    document.querySelectorAll("a,button,.music-card,.vid-card,.gallery__item,.impact-stat,.nav__logo,select").forEach(el => {
-      el.addEventListener("mouseenter", () => cursor.classList.add("is-hovering"));
-      el.addEventListener("mouseleave", () => cursor.classList.remove("is-hovering"));
+    // Hover state on clickable elements
+    document.addEventListener("mouseover", (e) => {
+      const el = e.target.closest("a,button,.music-card,.vid-card,.gallery__item,.impact-stat,.nav__logo,select");
+      if (el) cursor.classList.add("is-hovering");
     });
+    document.addEventListener("mouseout", (e) => {
+      const el = e.target.closest("a,button,.music-card,.vid-card,.gallery__item,.impact-stat,.nav__logo,select");
+      if (el) cursor.classList.remove("is-hovering");
+    });
+
     document.addEventListener("mousedown", () => cursor.classList.add("is-clicking"));
     document.addEventListener("mouseup",   () => cursor.classList.remove("is-clicking"));
     document.addEventListener("mouseleave", () => { cursor.style.opacity="0"; glow.style.opacity="0"; });
-    document.addEventListener("mouseenter", () => { cursor.style.opacity="1"; glow.style.opacity="1"; });
+    document.addEventListener("mouseenter", () => { if(moved){ cursor.style.opacity="1"; glow.style.opacity="1"; } });
   }
 
   /* ── Nav scroll state (throttled) ────────────────────────── */
