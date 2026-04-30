@@ -44,7 +44,7 @@
       loader.addEventListener("transitionend", () => {
         loader.remove();
       }, { once: true });
-    }, 380);
+    }, 150);
   }
 
   // ── Track images ──────────────────────────────────────────
@@ -65,7 +65,7 @@
     video.addEventListener("loadedmetadata", onReady, { once: true });
     video.addEventListener("error",          onReady, { once: true });
     // Fallback: if video never fires, don't block forever
-    setTimeout(onReady, 6000);
+    setTimeout(onReady, 2500);
   });
 
   // ── Track fonts via document.fonts ────────────────────────
@@ -84,30 +84,30 @@
     checkDone();
   }, { once: true });
 
-  // ── Minimum display time (600ms) so loader doesn't flash ──
+  // ── Minimum display time (200ms) so loader doesn't flash ──
   const minTime = Date.now();
 
   function checkDone() {
     if (loaded < total) return;
     const elapsed = Date.now() - minTime;
-    const wait    = Math.max(0, 600 - elapsed);
+    const wait    = Math.max(0, 200 - elapsed);
     setTimeout(done, wait);
   }
 
-  // ── Absolute timeout — never block longer than 8s ─────────
-  setTimeout(done, 8000);
+  // ── Absolute timeout — never block longer than 4s ─────────
+  setTimeout(done, 4000);
 
   // Animate progress bar smoothly even before assets report in
   let fakeProgress = 0;
   const fakeTimer = setInterval(() => {
     if (resolved) { clearInterval(fakeTimer); return; }
-    // Crawl to 85% max, real progress takes over from there
-    if (fakeProgress < 85) {
-      fakeProgress += (85 - fakeProgress) * 0.04;
+    // Crawl to 75% max quickly, real progress takes over from there
+    if (fakeProgress < 75) {
+      fakeProgress += (75 - fakeProgress) * 0.18;
       if (total === 0) setProgress(fakeProgress);
       else setProgress(Math.max(fakeProgress, (loaded / total) * 100));
     }
-  }, 80);
+  }, 40);
 
   /* ── Devil Staff Cursor — Dark & Realistic ───────────────── */
   const isTouch = window.matchMedia("(hover: none)").matches;
