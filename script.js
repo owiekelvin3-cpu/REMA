@@ -56,18 +56,6 @@
     img.addEventListener("error", () => { loaded++; tick(); checkDone(); }, { once: true });
   });
 
-  // ── Track videos (only need metadata, not full download) ──
-  const videos = Array.from(document.querySelectorAll("video"));
-  videos.forEach(video => {
-    if (video.readyState >= 1) { loaded++; tick(); return; }
-    total++;
-    const onReady = () => { loaded++; tick(); checkDone(); };
-    video.addEventListener("loadedmetadata", onReady, { once: true });
-    video.addEventListener("error",          onReady, { once: true });
-    // Fallback: if video never fires, don't block forever
-    setTimeout(onReady, 2500);
-  });
-
   // ── Track fonts via document.fonts ────────────────────────
   total++;
   document.fonts.ready.then(() => {
@@ -77,6 +65,7 @@
   });
 
   // ── window.load = final safety net ────────────────────────
+  // Only wait for images + fonts, NOT videos (they lazy-load after)
   total++;
   window.addEventListener("load", () => {
     loaded++;
