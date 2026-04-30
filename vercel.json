@@ -10,17 +10,23 @@
       ]
     },
     {
+      "source": "/script.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
+        { "key": "Content-Type", "value": "application/javascript; charset=utf-8" }
+      ]
+    },
+    {
       "source": "/style.css",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" },
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
         { "key": "Content-Type", "value": "text/css; charset=utf-8" }
       ]
     },
     {
-      "source": "/script.js",
+      "source": "/index.html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" },
-        { "key": "Content-Type", "value": "application/javascript; charset=utf-8" }
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
       ]
     },
     {
