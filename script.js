@@ -227,26 +227,38 @@
   const burger     = document.getElementById("navBurger");
   const mobileMenu = document.getElementById("mobileMenu");
   let menuOpen = false;
+
+  function openMenu() {
+    menuOpen = true;
+    mobileMenu.classList.add("open");
+    burger.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMenu() {
+    menuOpen = false;
+    mobileMenu.classList.remove("open");
+    burger.classList.remove("is-open");
+    document.body.style.overflow = "";
+  }
+
   burger.addEventListener("click", () => {
-    menuOpen = !menuOpen;
-    mobileMenu.classList.toggle("open", menuOpen);
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    const spans = burger.querySelectorAll("span");
-    if (menuOpen) {
-      spans[0].style.transform = "rotate(45deg) translate(4px, 4px)";
-      spans[1].style.opacity   = "0";
-      spans[2].style.transform = "rotate(-45deg) translate(4px, -4px)";
-    } else {
-      spans.forEach(s => { s.style.transform = ""; s.style.opacity = ""; });
-    }
+    menuOpen ? closeMenu() : openMenu();
   });
+
+  // Close on link click
   document.querySelectorAll(".mobile-link").forEach(link => {
-    link.addEventListener("click", () => {
-      menuOpen = false;
-      mobileMenu.classList.remove("open");
-      document.body.style.overflow = "";
-      burger.querySelectorAll("span").forEach(s => { s.style.transform = ""; s.style.opacity = ""; });
-    });
+    link.addEventListener("click", closeMenu);
+  });
+
+  // Close on backdrop click (clicking outside the ul)
+  mobileMenu.addEventListener("click", (e) => {
+    if (e.target === mobileMenu) closeMenu();
+  });
+
+  // Close on Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && menuOpen) closeMenu();
   });
 
   /* ── Scroll reveal ────────────────────────────────────────── */
