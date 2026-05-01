@@ -1279,8 +1279,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ── Devil Staff Cursor — Dark & Realistic ────────────────── */
 
-/* Hide default cursor on the entire document */
-html, html *, html *::before, html *::after { cursor: none !important; }
+/* Hide default cursor — desktop only, never on touch devices */
+@media (pointer: fine) {
+  html, html *, html *::before, html *::after { cursor: none !important; }
+}
 
 .cursor-main {
   position: fixed;
@@ -1342,9 +1344,9 @@ html, html *, html *::before, html *::after { cursor: none !important; }
   will-change: left, top;
 }
 
-@media (hover: none) {
+@media (hover: none), (pointer: coarse) {
   html, html *, html *::before, html *::after { cursor: auto !important; }
-  .cursor-main, .cursor-glow, .cursor-smoke { display: none; }
+  .cursor-main, .cursor-glow, .cursor-smoke { display: none !important; }
 }
 
 /* ═══════════════════════════════════════════════════════════
