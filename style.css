@@ -264,20 +264,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .mobile-menu {
   position: fixed;
   inset: 0;
-  z-index: 150; /* above content, below burger */
-  background: rgba(8,8,8,0.97);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  z-index: 150;
+  background: #080808;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-12px);
-  transition: opacity 0.35s cubic-bezier(0.16,1,0.3,1),
-              transform 0.35s cubic-bezier(0.16,1,0.3,1);
+  transform: translateY(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 .mobile-menu.open {
   opacity: 1;
@@ -291,35 +287,37 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .mobile-menu ul li {
   margin: 0;
-  overflow: hidden;
+  /* removed overflow:hidden — it was clipping the translateY links */
 }
 /* Staggered link reveal */
-.mobile-menu ul li:nth-child(1) .mobile-link { transition-delay: 0.05s; }
-.mobile-menu ul li:nth-child(2) .mobile-link { transition-delay: 0.10s; }
-.mobile-menu ul li:nth-child(3) .mobile-link { transition-delay: 0.15s; }
-.mobile-menu ul li:nth-child(4) .mobile-link { transition-delay: 0.20s; }
-.mobile-menu ul li:nth-child(5) .mobile-link { transition-delay: 0.25s; }
+.mobile-menu ul li:nth-child(1) .mobile-link { transition-delay: 0.06s; }
+.mobile-menu ul li:nth-child(2) .mobile-link { transition-delay: 0.12s; }
+.mobile-menu ul li:nth-child(3) .mobile-link { transition-delay: 0.18s; }
+.mobile-menu ul li:nth-child(4) .mobile-link { transition-delay: 0.24s; }
+.mobile-menu ul li:nth-child(5) .mobile-link { transition-delay: 0.30s; }
 
 .mobile-link {
   display: block;
-  padding: 0.9rem 2rem;
+  padding: 1rem 2.5rem;
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 8vw, 3.5rem);
+  font-size: clamp(2.4rem, 9vw, 3.8rem);
   letter-spacing: 0.06em;
-  color: rgba(245,245,240,0.35);
-  transition: color 0.3s ease, transform 0.3s ease;
-  transform: translateY(20px);
+  color: var(--white);           /* fully visible always */
+  opacity: 0;                    /* hidden via opacity, not color */
+  transform: translateY(24px);
+  transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1),
+              transform 0.4s cubic-bezier(0.16,1,0.3,1),
+              color 0.3s ease;
 }
 .mobile-menu.open .mobile-link {
-  color: rgba(245,245,240,0.7);
+  opacity: 1;
   transform: translateY(0);
 }
 .mobile-link:hover,
 .mobile-link:focus {
-  color: var(--white);
+  color: var(--red);
   outline: none;
 }
-/* Active link highlight */
 .mobile-link.active { color: var(--red); }
 
 /* Red accent line at bottom of menu */
